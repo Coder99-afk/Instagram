@@ -50,7 +50,7 @@ public class PostService {
         List<Post> posts= postRepository.findAll(Sort.by(Sort.Direction.DESC, "comments.size"));
         List<Post> updatedPosts= new ArrayList<>();
         for(Post post: posts){
-            List<Comment> commentList= commentRepository.findTop2ByPostByCreated(post);
+            List<Comment> commentList= commentRepository.findTop2ByPostByCreated(post.getId());
             List<Comment> last2Comments= new ArrayList<>(2);
             last2Comments.add(commentList.getLast());
             last2Comments.add(commentList.get(commentList.size()-2));

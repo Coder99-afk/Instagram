@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    @Query("SELECT c FROM Comment c WHERE c.post.id = :post.getId() ")
-    List<Comment> findTop2ByPostByCreated(Post post);
+    @Query("SELECT c FROM Comment c WHERE c.post.id = :postId ")
+    List<Comment> findTop2ByPostByCreated(Long postId);
 }
