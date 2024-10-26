@@ -25,6 +25,7 @@ public class PostService {
     @Autowired
     private CommentRepository commentRepository;
 
+
     public Post createPost(String caption, List<MultipartFile> images) throws IOException {
         Post post= new Post();
         post.setCaption(caption);
@@ -32,9 +33,15 @@ public class PostService {
 
         List<Image> imageEntities= new ArrayList<>();
         for(MultipartFile imageFile: images){
-            String imageUrl= imageService.saveImageFile(imageFile);
+//            String imageUrl= imageService.saveImageFile(imageFile);
+//            Image imageEntity= new Image();
+//            imageEntity.setUrl(imageUrl);
+//            imageEntity.setPost(savedPost);
+//            imageEntities.add(imageEntity);
             Image imageEntity= new Image();
-            imageEntity.setUrl(imageUrl);
+            imageEntity.setImageName(imageFile.getOriginalFilename());
+            imageEntity.setImageType(imageFile.getContentType());
+            imageEntity.setImageData(imageFile.getBytes());
             imageEntity.setPost(savedPost);
             imageEntities.add(imageEntity);
         }
