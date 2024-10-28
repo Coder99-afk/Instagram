@@ -5,8 +5,12 @@ import com.wbd.Instagram.model.Post;
 import com.wbd.Instagram.model.User;
 import com.wbd.Instagram.repository.CommentRepository;
 import com.wbd.Instagram.repository.PostRepository;
+import com.wbd.Instagram.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -14,8 +18,11 @@ public class CommentService {
     private CommentRepository commentRepository;
     @Autowired
     private PostRepository postRepository;
+    @Autowired
+    private UserRepository userRepository;
 
-    public Comment addComment(Long postId, String content, User user){
+    public Comment addComment(Long postId, String content, Long userId){
+        User user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
         Post post= postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
         Comment comment= new Comment();
         comment.setContent(content);

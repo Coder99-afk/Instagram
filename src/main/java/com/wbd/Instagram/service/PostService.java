@@ -42,7 +42,7 @@ public class PostService {
             imageEntity.setImageName(imageFile.getOriginalFilename());
             imageEntity.setImageType(imageFile.getContentType());
             imageEntity.setImageData(imageFile.getBytes());
-            imageEntity.setPost(savedPost);
+            //imageEntity.setPost(savedPost);
             imageEntities.add(imageEntity);
         }
         savedPost.setImages(imageEntities);

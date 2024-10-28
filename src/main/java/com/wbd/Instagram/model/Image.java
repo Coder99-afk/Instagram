@@ -13,7 +13,6 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    //private String url;
     private String imageName;
     private String imageType;
     @Lob
