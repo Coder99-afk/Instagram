@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class CommentService {
@@ -21,7 +22,7 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
-    public Comment addComment(Long postId, String content, Long userId){
+    public Comment addComment(long postId, String content, long userId){
         User user= userRepository.findById(userId).orElseThrow(()->new RuntimeException("User not found"));
         Post post= postRepository.findById(postId).orElseThrow(()->new RuntimeException("Post not found"));
         Comment comment= new Comment();

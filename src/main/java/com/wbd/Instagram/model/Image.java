@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
+
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @UuidGenerator
+    @Column(updatable = false, nullable = false)
     private long id;
     private String imageName;
     private String imageType;

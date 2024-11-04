@@ -5,6 +5,7 @@ import com.wbd.Instagram.model.Post;
 import com.wbd.Instagram.model.User;
 import com.wbd.Instagram.repository.PostRepository;
 import com.wbd.Instagram.service.CommentService;
+import com.wbd.Instagram.service.ImageService;
 import com.wbd.Instagram.service.PostService;
 import com.wbd.Instagram.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,14 @@ public class PostController {
     private CommentService commentService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ImageService imageService;
     @PostMapping("/posts")
     public ResponseEntity<Post> createPost(@RequestParam("caption") String caption,
                                            @RequestParam("images")List<MultipartFile> images) throws IOException {
+        for(MultipartFile image: images) {
+            imageService.saveImageFile(image);
+        }
         Post post= postService.createPost(caption, images);
         return ResponseEntity.ok(post);
     }
@@ -52,13 +58,13 @@ public class PostController {
         return new ResponseEntity<>(userService.registerUser(user), HttpStatus.CREATED);
     }
     @PostMapping("/comments/{postId}")
-    public ResponseEntity<Comment> addComment(@PathVariable long postId, @RequestBody String content,
+    public ResponseEntity<Comment> addComment(@PathVariable long postId, @RequestParam String content,
                                               @RequestParam long userId){
         return new ResponseEntity<>(commentService.addComment(postId, content, userId), HttpStatus.OK);
     }
     @DeleteMapping("/comments/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable long id, Principal principal){
-        String userName= principal.getName();
+    public ResponseEntity<Void> deleteComment(@PathVariable long id, @RequestParam String userName){
+        //String userName= principal.getName();
         User authenticatedUser= userService.getUserByName(userName);
         commentService.deleteComment(id, authenticatedUser);
         return ResponseEntity.noContent().build();

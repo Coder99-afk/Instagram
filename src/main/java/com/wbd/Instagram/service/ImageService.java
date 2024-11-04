@@ -26,7 +26,7 @@ public class ImageService {
         }
         String imageFormat= FilenameUtils.getExtension(file.getOriginalFilename());
         assert imageFormat != null;
-        if(!Arrays.asList("png", "jpg", "bmp").contains(imageFormat.toLowerCase())){
+        if(!Arrays.asList("png", "jpg", "bmp", "jpeg").contains(imageFormat.toLowerCase())){
             throw new RuntimeException("Invalid File Format");
         }
 //        //Converting img to jpg
